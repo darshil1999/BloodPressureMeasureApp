@@ -1,0 +1,49 @@
+﻿@model List<BloodPressure>
+@functions {
+    public string GetCategoryColor(string category)
+    {
+        return category switch
+        {
+            "Normal" => "#006400", // dark green
+            "Elevated" => "#0000FF", // blue
+            "Hypertension Stage 1" => "#FFA500", // orange
+            "Hypertension Stage 2" => "#FF4500", // orange red
+            "Hypertensive Crisis" => "#8B0000", // dark red
+            _ => "#000000", // default color, black
+        };
+    }
+}
+
+<h2>All Measurements</h2>
+
+<a asp-action="Create" asp-Controller="BloodPressure">Add new BP measurement</a>
+|
+<a asp-action="List" asp-controller="BloodPressure"> Information on BP measurements</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Reading</th>
+            <th>Category</th>
+            <th>Position</th>
+            <th>Date Taken</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (BloodPressure obj in Model)
+        {
+            <tr>
+                <td>@obj.Systolic / @obj.Diastolic</td>
+                <td style="color:@GetCategoryColor(obj.BPCategory)">@obj.BPCategory</td>
+                <td>@obj.Position?.PositionName</td>
+                <td>@obj.MeasurementDate?.ToString("d")</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="BloodPressure" asp-route-id="@obj.BloodPressureId">Edit</a>
+                    |
+                    <a asp-action="Delete" asp-controller="BloodPressure" asp-route-id="@obj.BloodPressureId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,15 @@
+﻿@model BloodPressure;
+
+<h2>Delete the Blood Pressure Measurement</h2>
+
+<form asp-action="DeleteConfirmed" asp-route-id="@Model.BloodPressureId" asp-controller="BloodPressure" method="post">
+    <input type="hidden" asp-for="BloodPressureId" />
+    <p>Are you sure you want to delete this measurement?</p>
+    <div>
+        <strong>Systolic:</strong> @Model.Systolic <br />
+        <strong>Diastolic:</strong> @Model.Diastolic <br />
+        <strong>Measurement Date:</strong> @Model.MeasurementDate?.ToString("d")
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Delete</button>
+    <a asp-action="List" asp-controller="BloodPressure" class="btn btn-danger mt-2">Cancel</a>
+</form>
